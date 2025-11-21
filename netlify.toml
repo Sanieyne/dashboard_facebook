@@ -1,17 +1,31 @@
 [build]
-  publish = "build/web"
-  command = """
-    # Download Flutter version compatible with Dart 3.9.x
-    curl -O https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.47.0-stable.tar.xz &&
-    tar xf flutter_linux_3.47.0-stable.tar.xz &&
-    export PATH=$PWD/flutter/bin:$PATH &&
-    
-    # Check Flutter version
-    flutter --version &&
-    
-    # Get dependencies
-    flutter pub get &&
-    
-    # Build web
-    flutter build web
-  """
+
+The publish directory remains correct
+
+publish = "build/web"
+
+We remove the custom command entirely
+
+[build.environment]
+
+Specify the Flutter version you need. The plugin will handle the install.
+
+We'll stick to your requested version 3.47.0.
+
+FLUTTER_VERSION = "3.47.0"
+
+Add the Flutter Build Plugin
+
+[[plugins]]
+package = "netlify-plugin-flutter"
+
+If you need to specify the exact build command (e.g., if you have flavors),
+
+you can use build.command, but the plugin handles flutter build web by default.
+
+If you only need 'flutter build web', you can omit the command line.
+
+I'll include 'flutter build web' here for clarity, though it's often optional with the plugin.
+
+[build]
+command = "flutter build web"
